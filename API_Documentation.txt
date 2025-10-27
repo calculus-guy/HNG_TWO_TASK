@@ -1,0 +1,94 @@
+# Country Currency & Exchange API
+
+This API fetches country data, including currencies, and provides CRUD operations on the data. It calculates the estimated GDP of each country based on population and exchange rates.
+
+## **Endpoints**
+
+### **POST /countries/refresh**
+Fetches country data and exchange rates, stores or updates it in the database, and generates a summary image.
+
+**Response:**
+- `200 OK` on success.
+- `503 Service Unavailable` if the external data source fails.
+
+### **GET /countries**
+Fetches all countries with optional filters like region, currency, and sorting by GDP.
+
+**Query Parameters:**
+- `region`: Filter by region.
+- `currency`: Filter by currency code.
+- `sort`: Sort by GDP (`gdp_desc` for descending order).
+
+**Response:**
+- `200 OK` with a list of countries.
+
+### **GET /countries/:name**
+Fetches a specific country by name.
+
+**Response:**
+- `200 OK` with the country data.
+- `404 Not Found` if the country is not found.
+
+### **DELETE /countries/:name**
+Deletes a specific country by name.
+
+**Response:**
+- `204 No Content` on successful deletion.
+- `404 Not Found` if the country is not found.
+
+### **GET /status**
+Returns the total number of countries and the last refresh timestamp.
+
+**Response:**
+- `200 OK` with the total number of countries and last refreshed timestamp.
+
+### **GET /countries/image**
+Serves the generated summary image.
+
+**Response:**
+- `200 OK` with the image file.
+- `404 Not Found` if the image is not found.
+
+## **Testing**
+
+You can test the API using Postman or cURL:
+```bash
+curl -X POST http://localhost:8080/countries/refresh
+
+Environment Variables
+
+DB_HOST: Database host (default localhost).
+
+DB_USER: Database username (default root).
+
+DB_PASSWORD: Database password.
+
+DB_NAME: Database name (default country_currency_exchange).
+
+PORT: Port for the server (default 8080).
+
+
+### **Step 5: Tests**
+
+I have tested each endpoint using a tool like **Postman** to verify  implementation:
+
+1. **Test POST /countries/refresh**:
+   - Ensured it fetches and stores the country data and updates the database.
+   
+2. **Test GET /countries** with filters:
+   - Tested with query parameters for region, currency, and sorting.
+
+3. **Test GET /countries/:name**:
+   - Tested by querying for an existing country and a non-existent country.
+
+4. **Test DELETE /countries/:name**:
+   - Ensured that you can delete a country and handle the `404` case for non-existent countries.
+
+5. **Test GET /status**:
+   - Verified that it returns the total number of countries and last refresh timestamp.
+
+---
+
+### **Step 6: Deployment**
+
+Deployed on Railway
